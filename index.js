@@ -4,8 +4,9 @@ const bodyParser = require("body-parser");
 const validateBody = require("./src/middware/validateBody");
 const schemaBody = require("./src/schema/schemaBody");
 const triggerMesssage = require("./src/controllers/controllerPost");
+const { port } = require("./src/config/keys");
 
-const port = process.env.PORT || 3003;
+const PORT = port || 3003;
 
 const app = express();
 
@@ -15,8 +16,8 @@ app.use(bodyParser.json());
 
 app.use('/api', validateBody(schemaBody), triggerMesssage);
 
-app.listen(port, function () {
-    console.log(`App listening on port ${port}!`);
+app.listen(PORT, function () {
+    console.log(`App listening on port ${PORT}!`);
     console.log('✅ API Started');
 });
   
