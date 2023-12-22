@@ -14,10 +14,9 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use('/api', validateBody(schemaBody), triggerMesssage);
+app.use("/api", validateBody(schemaBody), triggerMesssage);
 
 app.listen(PORT, function () {
-    console.log(`App listening on port ${PORT}!`);
-    console.log('✅ API Started');
+  console.log(`App listening on port ${PORT}!`);
+  console.log("✅ API Started");
 });
-  
