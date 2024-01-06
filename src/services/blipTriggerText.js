@@ -1,22 +1,18 @@
 const uuid = require("uuid");
 const axios = require("axios");
 const https = require("https");
+const { preffix, routerBotKey } = require("../config/keys");
 
-module.exports = sendMessage = async (
-  preffix,
-  tipo,
-  parameters,
-  phone,
-  routerBotKey
-) => {
-  const url = "https://" + preffix + "http.msging.net/messages"; 
-  const token = routerBotKey; 
-  const messageTemplateName = whatTemplate(tipo, parameters); 
-  console.log(messageTemplateName);
-  const recipient = phone + "@wa.gw.msging.net"; 
+module.exports = sendMessage = async (tipo, parameters, phone, sender) => {
+  const url = "https://" + preffix + ".http.msging.net/messages";
+  const token = sender || routerBotKey;
+
+  const messageTemplateName = tipo;
+
+  const recipient = phone + "@wa.gw.msging.net";
 
   const messageData = {
-    id: uuid.v1(), 
+    id: uuid.v1(),
     to: recipient,
     type: "application/json",
     content: {
@@ -37,22 +33,17 @@ module.exports = sendMessage = async (
     },
   };
 
-  try {
-    const response = await fetch(url, {
-      method: "POST",
+  axios
+    .post(url, messageData, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Key ${token}`,
       },
-      body: JSON.stringify(messageData),
+    })
+    .then((response) => {
+      console.log("Resposta do servidor text:", response.messageData);
+    })
+    .catch((error) => {
+      console.error("Erro na requisição text:", error);
     });
-
-    if (!response.ok) {
-      throw new Error(`Request failed with status ${response.status}`);
-    }
-
-    console.log("Message sent successfully!");
-  } catch (error) {
-    console.error("Error sending message:", error);
-  }
 };

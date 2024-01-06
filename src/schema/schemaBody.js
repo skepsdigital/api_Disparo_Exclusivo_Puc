@@ -2,9 +2,9 @@ const joi = require("joi");
 
 const schemaBody = joi.object({
   phone: joi.string().required(),
-
-  tipo: joi.string().valid("1", "2", "3").required(),
-
+  sender: joi.string(),
+  tipo: joi.string().required(),
+  direct: joi.string(),
   parameters: joi
     .array()
     .items(
@@ -13,7 +13,6 @@ const schemaBody = joi.object({
         text: joi.string().required(),
       })
     )
-    .min(5)
     .required(),
 
   midia: joi.array().items(

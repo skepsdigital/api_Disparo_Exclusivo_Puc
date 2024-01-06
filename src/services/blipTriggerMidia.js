@@ -1,14 +1,9 @@
 const axios = require("axios");
 const https = require("https");
 const uuid = require("uuid");
-
-module.exports = sendMindia = (
-  phone,
-  templateName,
-  midia,
-  preffix,
-  routerBotKey
-) => {
+const { preffix, routerBotKey } = require("../config/keys");
+module.exports = sendMindia = (phone, templateName, midia, sender) => {
+  const token = sender || routerBotKey;
   const data = {
     id: uuid.v1(),
     to: phone + "@wa.gw.msging.net",
@@ -36,16 +31,16 @@ module.exports = sendMindia = (
   };
 
   axios
-    .post(`https://${preffix}http.msging.net/messages`, data, {
+    .post(`https://${preffix}.http.msging.net/messages`, data, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Key ${routerBotKey}`,
+        Authorization: `Key ${token}`,
       },
     })
     .then((response) => {
-      console.log("Resposta do servidor:", response.data);
+      console.log("Resposta do servidor midia:", response.data);
     })
     .catch((error) => {
-      console.error("Erro na requisição:", error);
+      console.error("Erro na requisição midia:", error);
     });
 };

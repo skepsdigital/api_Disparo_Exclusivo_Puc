@@ -6,7 +6,7 @@ const schemaBody = require("./src/schema/schemaBody");
 const triggerMesssage = require("./src/controllers/controllerPost");
 const { port } = require("./src/config/keys");
 
-const PORT = port || 3003;
+const PORT = port;
 
 const app = express();
 
